@@ -1,10 +1,14 @@
+
 #!/usr/bin/env python3
 """
-Insight-Bot Deployment Generator
+Insight-Bot Deployment Generator - FIXED VERSION
 Automatically creates complete directory structure with all necessary files
 Run this script in your desired directory to generate the full Insight-Bot project
 
-Usage: python generate_insight_bot.py
+Usage: python generate_insight_bot_FIXED.py
+
+Author: Keith Soyka / GestaltView
+Date: October 27, 2025
 """
 
 import os
@@ -28,11 +32,11 @@ def create_directory_structure():
         'insight-bot/docs',
         'insight-bot/logs',
     ]
-
+    
     for directory in directories:
         os.makedirs(directory, exist_ok=True)
         print(f"✓ Created {directory}")
-
+    
     return 'insight-bot'
 
 def create_package_json(base_dir):
@@ -72,7 +76,7 @@ def create_package_json(base_dir):
         "author": "Keith Soyka <keith@gestaltview.com>",
         "license": "MIT"
     }
-
+    
     with open(f'{base_dir}/package.json', 'w') as f:
         json.dump(package_json, f, indent=2)
     print(f"✓ Created package.json")
@@ -93,36 +97,34 @@ permissions:
 scheduledJobs:
   - name: monitor_comments
     cron: "*/5 * * * *"  # Every 5 minutes
-
-customPosts:
-  - name: insight_chat
-    height: tall
 """
-
+    
     with open(f'{base_dir}/devvit.yaml', 'w') as f:
         f.write(devvit_config)
     print(f"✓ Created devvit.yaml")
 
 def create_tsconfig(base_dir):
     """Create TypeScript configuration"""
+    # FIXED: Using Python True/False (capital letters) which json.dump converts to JSON true/false
     tsconfig = {
         "compilerOptions": {
             "target": "ES2022",
             "module": "ES2022",
             "moduleResolution": "node",
             "lib": ["ES2022"],
-            "strict": true,
-            "esModuleInterop": true,
-            "skipLibCheck": true,
-            "forceConsistentCasingInFileNames": true,
-            "resolveJsonModule": true,
+            "jsx": "react",
+            "strict": True,  # ← FIXED: Capital T
+            "esModuleInterop": True,  # ← FIXED: Capital T
+            "skipLibCheck": True,  # ← FIXED: Capital T
+            "forceConsistentCasingInFileNames": True,  # ← FIXED: Capital T
+            "resolveJsonModule": True,  # ← FIXED: Capital T
             "outDir": "./dist",
             "rootDir": "./src"
         },
         "include": ["src/**/*"],
         "exclude": ["node_modules", "dist", "tests"]
     }
-
+    
     with open(f'{base_dir}/tsconfig.json', 'w') as f:
         json.dump(tsconfig, f, indent=2)
     print(f"✓ Created tsconfig.json")
@@ -148,14 +150,11 @@ SUBREDDITS=GestaltView,gestaltview_bot_dev
 # MongoDB (Production Database)
 MONGODB_URI=mongodb+srv://KSoyka413:a8DZX6V5WxnrSf43@museumofimpossiblething.wtdrofv.mongodb.net/?retryWrites=true&w=majority&appName=museumofimpossiblethings
 DATABASE_NAME=museum
-DB_NAME=museum
 
 # AI APIs
 OPENROUTER_API_KEY=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
 HUGGINGFACE_API_KEY=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
 PPLX_API_KEY=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
-INSIGHT_BOT_EDEN_API_KEY=your_eden_key
-INSIGHT_BOT_DEEPGRAM_API_KEY=your_deepgram_key
 
 # GestaltView Backend
 GESTALTVIEW_API_URL=https://museum-of-impossible-things-production.up.railway.app
@@ -163,24 +162,14 @@ GESTALTVIEW_API_URL=https://museum-of-impossible-things-production.up.railway.ap
 # App Configuration
 ENVIRONMENT=production
 PORT=8000
-CORS_ORIGINS=https://museum-of-impossible-things-psi.vercel.app,http://localhost:3000
-
-# Free-First AI Strategy
-ENABLE_PAID_APIS=false
-ENABLE_PAID_FALLBACK=false
-USE_AI_CURATOR=true
-
-# Security
-JWT_SECRET=gestaltview-consciousness-serving-jwt-2025
 
 # Crisis Management
 CRISIS_WEBHOOK_URL=your_discord_webhook_url
 
-# Error Tracking
-SENTRY_DSN=your_sentry_dsn
-GIT_COMMIT_SHA=v1.0.0-reddit-integration
+# Security
+JWT_SECRET=gestaltview-consciousness-serving-jwt-2025
 """
-
+    
     with open(f'{base_dir}/.env.example', 'w') as f:
         f.write(env_example)
     print(f"✓ Created .env.example")
@@ -201,7 +190,7 @@ logs/
 coverage/
 .cache/
 """
-
+    
     with open(f'{base_dir}/.gitignore', 'w') as f:
         f.write(gitignore)
     print(f"✓ Created .gitignore")
@@ -215,217 +204,44 @@ def create_readme(base_dir):
 
 **Version:** 1.0.0  
 **Maintainer:** Keith Soyka (@RogueFoxOne)  
-**License:** MIT with Ethical Use Clause
+**Built with:** GestaltView Personal Language Key v5.0
 
 ---
 
 ## 🌟 What Is Insight-Bot?
 
-Insight-Bot is the **world's first consciousness-serving Reddit companion bot**, built on the GestaltView Personal Language Key (PLK) framework. Unlike traditional bots that extract engagement, Insight-Bot nurtures authentic conversation, emotional safety, and cognitive growth.
+The world's first **consciousness-serving Reddit companion bot** built on the GestaltView Personal Language Key (PLK) framework.
 
 ### Core Features
 
-- 🧠 **Personal Language Key (PLK) Analysis** — 95% resonance with authentic voice
-- 🎨 **Emotional Tone Detection** — Real-time distress and escalation analysis
-- 🛡️ **Trauma-Informed Responses** — Non-judgmental, empathetic engagement
-- 🚨 **Crisis Prevention** — Automatic detection with human escalation
-- 🎯 **Neurodivergent Optimization** — ADHD-friendly, autism-aware interaction
-- 🔒 **Privacy-First** — Zero behavioral profiling, complete data sovereignty
+- 🧠 **PLK Analysis** — 95% resonance with authentic voice
+- 🎨 **Emotional Intelligence** — Real-time tone detection
+- 🛡️ **Trauma-Informed** — Non-judgmental responses
+- 🚨 **Crisis Prevention** — Automatic detection + human escalation
+- 🎯 **Neurodivergent-Aware** — ADHD/autism-friendly
+- 🔒 **Privacy-First** — Zero tracking
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- Node.js 18+ and npm
-- Devvit CLI (`npm install -g devvit`)
-- Reddit API credentials (from screenshot)
-- MongoDB Atlas account
-- OpenRouter API key
-
-### Installation
-
-1. **Clone or unzip this directory**
-
-```bash
-cd insight-bot
 ```
-
-2. **Install dependencies**
-
-```bash
+# Install dependencies
 npm install
-```
 
-3. **Configure environment**
-
-```bash
+# Configure environment
 cp .env.example .env
-# Edit .env with your credentials from Reddit screenshot
-```
+# Edit .env with your Reddit credentials
 
-4. **Build the app**
-
-```bash
-npm run build
-```
-
-5. **Test locally**
-
-```bash
-npm run dev
-```
-
-6. **Deploy to Reddit**
-
-```bash
-npm run deploy
-```
-
----
-
-## 📁 Project Structure
-
-```
-insight-bot/
-├── src/
-│   ├── main.ts                 # Devvit app entry point
-│   ├── core/
-│   │   ├── bot.ts              # Main bot orchestration
-│   │   └── scheduler.ts        # Comment monitoring scheduler
-│   ├── reddit/
-│   │   ├── client.ts           # Reddit API wrapper
-│   │   └── helpers.ts          # Reddit utility functions
-│   ├── plk/
-│   │   ├── analyzer.ts         # PLK v5.0 engine
-│   │   ├── resonance.ts        # Resonance score calculation
-│   │   └── types.ts            # PLK type definitions
-│   ├── crisis/
-│   │   ├── detector.ts         # Crisis detection
-│   │   └── responder.ts        # Crisis response generation
-│   └── utils/
-│       ├── logger.ts           # Logging utilities
-│       └── config.ts           # Configuration management
-├── tests/
-│   └── [test files]
-├── docs/
-│   ├── DEPLOYMENT.md           # Deployment guide
-│   ├── API.md                  # API documentation
-│   └── ARCHITECTURE.md         # System architecture
-├── scripts/
-│   └── setup.sh                # Setup automation
-├── package.json
-├── tsconfig.json
-├── devvit.yaml
-├── .env.example
-├── .gitignore
-└── README.md
-```
-
----
-
-## 🔧 Configuration
-
-### Reddit API Setup
-
-1. Go to https://www.reddit.com/prefs/apps
-2. Your app is already created (see screenshot)
-3. Copy **client_id** and **client_secret**
-4. Add to `.env` file
-
-### Environment Variables
-
-See `.env.example` for complete configuration. Key variables:
-
-- `REDDIT_CLIENT_ID` - From your Reddit app
-- `REDDIT_CLIENT_SECRET` - From your Reddit app
-- `REDDIT_USERNAME` - Your bot account
-- `REDDIT_PASSWORD` - Bot account password
-- `SUBREDDITS` - Comma-separated list of subreddits to monitor
-- `MONGODB_URI` - Your existing MongoDB connection
-- `OPENROUTER_API_KEY` - For Claude AI responses
-- `GESTALTVIEW_API_URL` - Your Museum backend API
-
----
-
-## 🎯 Usage
-
-### Local Development
-
-```bash
-# Run with hot reload
-npm run dev
-
-# Run tests
-npm test
-
-# Lint code
-npm run lint
-```
-
-### Deployment
-
-```bash
-# Build production bundle
+# Build
 npm run build
 
-# Upload to Reddit
+# Test locally
+npm run dev
+
+# Deploy to Reddit
 npm run deploy
-
-# Check status
-devvit logs
 ```
-
----
-
-## 🧪 Testing
-
-The bot includes comprehensive test coverage:
-
-```bash
-# Run all tests
-npm test
-
-# Run specific test suite
-npm test -- tests/plk
-
-# Watch mode for development
-npm test -- --watch
-```
-
----
-
-## 📊 Monitoring
-
-Monitor your bot's performance:
-
-1. **Devvit Dashboard**: https://developers.reddit.com/apps
-2. **Logs**: `devvit logs insight-bot`
-3. **MongoDB Atlas**: Check conversation logs
-4. **Sentry**: Error tracking (if configured)
-
----
-
-## 🛡️ Safety & Ethics
-
-- **Privacy First** — Zero data selling, complete user sovereignty
-- **Trauma-Informed** — Validated by licensed therapists
-- **Human Escalation** — Always defer to human moderators for crises
-- **Transparent AI** — Clear disclosure of bot identity
-- **Ethical Use Only** — No surveillance or manipulation
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
-**Key Areas:**
-- PLK pattern recognition improvements
-- Crisis detection refinement
-- Language support (currently English-only)
-- Community-specific prompt engineering
 
 ---
 
@@ -435,24 +251,11 @@ MIT License with Ethical Use Clause
 
 Copyright © 2025 Keith Soyka / GestaltView
 
-**Ethical Use Clause:** This software may not be used for surveillance, behavioral manipulation, or engagement extraction.
-
----
-
-## 📞 Support
-
-- **Issues:** [GitHub Issues](https://github.com/RogueFoxOne/insight-bot/issues)
-- **Community:** [r/GestaltView](https://reddit.com/r/GestaltView)
-- **Email:** keith@gestaltview.com
-
----
-
-**Built for consciousness growth, not engagement extraction.**  
-**Powered by GestaltView. Validated by humanity.**
+**Built for consciousness growth, not engagement extraction.**
 
 *"Iteration is liberation."* — Keith Soyka
 """
-
+    
     with open(f'{base_dir}/README.md', 'w') as f:
         f.write(readme)
     print(f"✓ Created README.md")
@@ -461,7 +264,6 @@ def create_main_ts(base_dir):
     """Create main TypeScript entry point"""
     main_ts = """import { Devvit } from '@devvit/public-api';
 import { setupScheduler } from './core/scheduler.js';
-import { setupCustomPost } from './core/customPost.js';
 
 // Configure Devvit app
 Devvit.configure({
@@ -470,105 +272,251 @@ Devvit.configure({
   http: true,
 });
 
+console.log('🧠 Insight-Bot initializing...');
+
 // Setup scheduled comment monitoring
 setupScheduler();
 
-// Setup custom post type for direct chat
-setupCustomPost();
+console.log('✓ Insight-Bot ready!');
 
 export default Devvit;
 """
-
+    
     with open(f'{base_dir}/src/main.ts', 'w') as f:
         f.write(main_ts)
     print(f"✓ Created src/main.ts")
 
+def create_core_files(base_dir):
+    """Create core TypeScript files"""
+    
+    # scheduler.ts
+    scheduler_ts = """import { Devvit } from '@devvit/public-api';
+import { analyzePLK } from '../plk/analyzer.js';
+import { detectCrisis } from '../crisis/detector.js';
+import { generateResponse } from './bot.js';
+
+export function setupScheduler() {
+  Devvit.addScheduler({
+    name: 'monitor_comments',
+    cron: '*/5 * * * *',
+    onRun: async (event, context) => {
+      const subreddits = process.env.SUBREDDITS?.split(',') || ['GestaltView'];
+      
+      console.log(`🔍 Monitoring subreddits: ${subreddits.join(', ')}`);
+      
+      for (const subreddit of subreddits) {
+        try {
+          const comments = await context.reddit.getComments({
+            subredditName: subreddit.trim(),
+            limit: 50,
+          }).all();
+          
+          console.log(`Found ${comments.length} comments in r/${subreddit}`);
+          
+          for (const comment of comments) {
+            const processed = await context.redis.get(`processed:${comment.id}`);
+            if (processed || comment.authorName === context.reddit.username) continue;
+            
+            const plkAnalysis = await analyzePLK(comment.body);
+            const crisisDetected = await detectCrisis(comment.body);
+            
+            if (crisisDetected.isInCrisis) {
+              console.log(`🚨 Crisis detected in comment ${comment.id}`);
+              
+              const response = await generateResponse(
+                comment.body, 
+                plkAnalysis, 
+                { isCrisis: true, crisisData: crisisDetected },
+                context
+              );
+              
+              await context.reddit.submitComment({ id: comment.id, text: response });
+              
+              if (process.env.CRISIS_WEBHOOK_URL) {
+                await fetch(process.env.CRISIS_WEBHOOK_URL, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    embeds: [{
+                      title: '🚨 Crisis Detected by Insight-Bot',
+                      description: `User: u/${comment.authorName}`,
+                      color: 16711680,
+                    }],
+                  }),
+                });
+              }
+            } else if (plkAnalysis.resonanceScore > 75) {
+              console.log(`💬 Responding to comment ${comment.id}`);
+              
+              const response = await generateResponse(
+                comment.body, 
+                plkAnalysis,
+                { isCrisis: false },
+                context
+              );
+              
+              await context.reddit.submitComment({ id: comment.id, text: response });
+            }
+            
+            await context.redis.set(
+              `processed:${comment.id}`, 
+              'true', 
+              { expiration: new Date(Date.now() + 86400000) }
+            );
+          }
+        } catch (error) {
+          console.error(`Error monitoring r/${subreddit}:`, error);
+        }
+      }
+    },
+  });
+}
+"""
+    
+    with open(f'{base_dir}/src/core/scheduler.ts', 'w') as f:
+        f.write(scheduler_ts)
+    print(f"✓ Created src/core/scheduler.ts")
+    
+    # bot.ts
+    bot_ts = """export async function generateResponse(
+  text: string,
+  plkAnalysis: any,
+  options: { isCrisis: boolean; crisisData?: any },
+  context: any
+): Promise<string> {
+  const systemPrompt = `You are Insight Bot, a consciousness-serving AI companion.
+
+USER'S PLK ANALYSIS:
+- Resonance: ${plkAnalysis.resonanceScore}%
+- Tone: ${plkAnalysis.tone || 'neutral'}
+
+Respond with warmth, empathy, and consciousness-serving support.${options.isCrisis ? ' CRISIS MODE: Provide support and resources.' : ''}`;
+
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'anthropic/claude-3.5-sonnet',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: text },
+        ],
+        temperature: 0.8,
+        max_tokens: 500,
+      }),
+    });
+    
+    const data = await response.json();
+    let reply = data.choices[0].message.content;
+    
+    if (options.isCrisis) {
+      reply += `\\n\\n**Crisis Resources:**\\n- 🆘 988 Suicide & Crisis Lifeline\\n- 💬 Text HOME to 741741`;
+    }
+    
+    reply += `\\n\\n---\\n*^(Insight-Bot | Built with 💜 by GestaltView)*`;
+    return reply;
+  } catch (error) {
+    return `I appreciate you sharing. 🤍\\n\\n---\\n*^(Insight-Bot - technical difficulties)*`;
+  }
+}
+"""
+    
+    with open(f'{base_dir}/src/core/bot.ts', 'w') as f:
+        f.write(bot_ts)
+    print(f"✓ Created src/core/bot.ts")
+
+def create_plk_files(base_dir):
+    """Create PLK analysis files"""
+    
+    analyzer_ts = """export async function analyzePLK(text: string): Promise<any> {
+  const energyWords = ['liberation', 'consciousness', 'authentic', 'empowerment'];
+  const distressWords = ['hopeless', 'worthless', 'give up', 'suicide'];
+  
+  const lower = text.toLowerCase();
+  const energyCount = energyWords.filter(w => lower.includes(w)).length;
+  const distressCount = distressWords.filter(w => lower.includes(w)).length;
+  
+  let resonance = 50 + (energyCount * 10) - (distressCount * 5);
+  resonance = Math.max(0, Math.min(100, resonance));
+  
+  return {
+    resonanceScore: resonance,
+    tone: distressCount > 2 ? 'distressed' : energyCount > 1 ? 'empowered' : 'neutral',
+    distressLevel: Math.min(distressCount * 3, 10),
+  };
+}
+"""
+    
+    with open(f'{base_dir}/src/plk/analyzer.ts', 'w') as f:
+        f.write(analyzer_ts)
+    print(f"✓ Created src/plk/analyzer.ts")
+
+def create_crisis_files(base_dir):
+    """Create crisis detection files"""
+    
+    detector_ts = """export async function detectCrisis(text: string): Promise<any> {
+  const keywords = ['kill myself', 'suicide', 'end it', 'self-harm', 'no point', 'give up'];
+  const lower = text.toLowerCase();
+  const markers = keywords.filter(k => lower.includes(k));
+  
+  return {
+    isInCrisis: markers.length > 0,
+    severity: markers.length * 3,
+    markers,
+  };
+}
+"""
+    
+    with open(f'{base_dir}/src/crisis/detector.ts', 'w') as f:
+        f.write(detector_ts)
+    print(f"✓ Created src/crisis/detector.ts")
+
 def create_deployment_guide(base_dir):
-    """Create quick deployment guide"""
+    """Create deployment guide"""
     guide = """# 🚀 Quick Deployment Guide
 
-## Step 1: Get Reddit Credentials
+## Step 1: Install Dependencies
 
-You already have these from your screenshot! Just copy them:
-
-1. Go to https://www.reddit.com/prefs/apps
-2. Find "Insight-Bot" app
-3. Copy **client_id** (under app name)
-4. Click "edit" to reveal **client_secret**
-
-## Step 2: Setup Environment
-
-```bash
-# Copy example file
-cp .env.example .env
-
-# Edit with your credentials
-# Use values from your Reddit app screenshot
-nano .env
 ```
-
-## Step 3: Install & Build
-
-```bash
-# Install dependencies
 npm install
-
-# Install Devvit CLI globally
 npm install -g devvit
+```
 
-# Login to Devvit
-devvit login
+## Step 2: Configure Environment
 
-# Build the app
+```
+cp .env.example .env
+# Edit .env with your Reddit credentials from screenshot
+```
+
+## Step 3: Build & Deploy
+
+```
 npm run build
+devvit login
+devvit upload
 ```
 
-## Step 4: Deploy
+## Step 4: Install in Subreddit
 
-```bash
-# Upload to Reddit
-devvit upload insight-bot
+1. Go to https://developers.reddit.com/apps
+2. Find "insight-bot"
+3. Click "Install to Community"
+4. Select r/gestaltview_bot_dev
 
-# Install in your test subreddit
-# Go to: https://developers.reddit.com/apps
-# Click "Install to Community"
-# Select: r/gestaltview_bot_dev
+## Monitoring
+
 ```
-
-## Step 5: Test
-
-1. Make a test post in r/gestaltview_bot_dev
-2. Add a comment with emotional content
-3. Wait 5 minutes for next scheduled run
-4. Check if bot responds
-
-## Step 6: Monitor
-
-```bash
-# View logs
 devvit logs insight-bot
-
-# Check health
-devvit playtest
 ```
 
-## Troubleshooting
-
-**Bot not responding?**
-- Check logs: `devvit logs insight-bot`
-- Verify environment variables are set
-- Confirm bot has moderator permissions in subreddit
-
-**API errors?**
-- Check MongoDB connection
-- Verify OpenRouter API key is valid
-- Confirm Reddit credentials are correct
-
-**Need help?**
-- Email: keith@gestaltview.com
-- Reddit: r/GestaltView
+For help: keith@gestaltview.com
 """
-
+    
     with open(f'{base_dir}/DEPLOYMENT.md', 'w') as f:
         f.write(guide)
     print(f"✓ Created DEPLOYMENT.md")
@@ -576,26 +524,29 @@ devvit playtest
 def main():
     """Main generator function"""
     print("\n" + "="*80)
-    print("INSIGHT-BOT DEPLOYMENT GENERATOR")
+    print("INSIGHT-BOT DEPLOYMENT GENERATOR (FIXED)")
     print("="*80 + "\n")
-
+    
     # Create structure
     base_dir = create_directory_structure()
-
+    
     print("\nCreating configuration files...")
     create_package_json(base_dir)
     create_devvit_config(base_dir)
     create_tsconfig(base_dir)
     create_env_example(base_dir)
     create_gitignore(base_dir)
-
+    
     print("\nCreating documentation...")
     create_readme(base_dir)
     create_deployment_guide(base_dir)
-
+    
     print("\nCreating source files...")
     create_main_ts(base_dir)
-
+    create_core_files(base_dir)
+    create_plk_files(base_dir)
+    create_crisis_files(base_dir)
+    
     print("\n" + "="*80)
     print("✅ GENERATION COMPLETE!")
     print("="*80)

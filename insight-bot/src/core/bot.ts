@@ -1,0 +1,45 @@
+export async function generateResponse(
+  text: string,
+  plkAnalysis: any,
+  options: { isCrisis: boolean; crisisData?: any },
+  context: any
+): Promise<string> {
+  const systemPrompt = `You are Insight Bot, a consciousness-serving AI companion.
+
+USER'S PLK ANALYSIS:
+- Resonance: ${plkAnalysis.resonanceScore}%
+- Tone: ${plkAnalysis.tone || 'neutral'}
+
+Respond with warmth, empathy, and consciousness-serving support.${options.isCrisis ? ' CRISIS MODE: Provide support and resources.' : ''}`;
+
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'anthropic/claude-3.5-sonnet',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: text },
+        ],
+        temperature: 0.8,
+        max_tokens: 500,
+      }),
+    });
+    
+    const data = await response.json();
+    let reply = data.choices[0].message.content;
+    
+    if (options.isCrisis) {
+      reply += `\n\n**Crisis Resources:**\n- 🆘 988 Suicide & Crisis Lifeline\n- 💬 Text HOME to 741741`;
+    }
+    
+    reply += `\n\n---\n*^(Insight-Bot | Built with 💜 by GestaltView)*`;
+    return reply;
+  } catch (error) {
+    return `I appreciate you sharing. 🤍\n\n---\n*^(Insight-Bot - technical difficulties)*`;
+  }
+}

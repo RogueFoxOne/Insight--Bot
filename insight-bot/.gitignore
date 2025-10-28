@@ -1,0 +1,13 @@
+.env
+.env.local
+node_modules/
+dist/
+*.log
+logs/
+.devvit/
+.DS_Store
+.vscode/
+.idea/
+*.test.ts.snap
+coverage/
+.cache/

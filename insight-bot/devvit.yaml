@@ -12,7 +12,3 @@ permissions:
 scheduledJobs:
   - name: monitor_comments
     cron: "*/5 * * * *"  # Every 5 minutes
-
-customPosts:
-  - name: insight_chat
-    height: tall
